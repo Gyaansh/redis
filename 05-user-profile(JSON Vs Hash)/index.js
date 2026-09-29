@@ -18,8 +18,11 @@ app.post("/user/:id/hash", async (req, res) => {
   await redis.hset(`user:${req.params.id}:hash`, req.body);
   res.json({ savedAs: "hash" });
 });
-app.post("/user/:id/hash", async (req, res) => {
+app.get("/user/:id/hash", async (req, res) => {
   const data = await redis.hgetall(`user:${req.params.id}:hash`);
   res.json({ user: data });
 });
 
+app.listen(3000,()=>{
+    console.log("Server is listening on port 3000");
+})
