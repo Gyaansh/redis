@@ -14,17 +14,17 @@ app.post("/email", async (req, res) => {
     createdAt: new Date().toISOString(),
   };
   await redis.lpush(QUEUE_KEY, JSON.stringify(job));
-  res.json({ success: true,job });
+  res.json({ success: true, job });
 });
 
-app.get('/email/process-one',async (req,res) => {
-    const raw_job = await redis.rpop(QUEUE_KEY);
-    if(!raw_job){
-        return res.status(400).json({success:false,messege:"No job found"});
-    }
-    res.json({job:JSON.parse(raw_job)})
+app.get("/email/process-one", async (req, res) => {
+  const raw_job = await redis.rpop(QUEUE_KEY);
+  if (!raw_job) {
+    return res.status(400).json({ success: false, messege: "No job found" });
+  }
+  res.json({ job: JSON.parse(raw_job) });
 });
 
-app.listen(3000,()=>{
-    console.log('server is listening on port 3000');
-})
+app.listen(3000, () => {
+  console.log("server is listening on port 3000");
+});
